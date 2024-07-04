@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <form id="registerForm">
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+
+        <button type="submit">Register</button>
+    </form>
+    <div class="resp-content"></div>
+    <script>
+        const registerForm = document.getElementById('registerForm');
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+            const respContent = document.querySelector('.resp-content');
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password, email})
+                });
+                const data = await res.json();
+                if(res.status == 201) {
+                    window.location.href = '/login';
+                }else if(res.status == 400 || res.status == 409){
+                    respContent.innerHTML = `<p style="color: red;">${data.message}</p>`;
+                }
+            } catch (err) {
+                respContent.innerHTML = `<p style="color: red;">${err}</p>`;
+            }
+        });
+    </script>
+</body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    h1 {
+        text-align: center;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    input {
+        margin: 5px;
+        padding: 5px;
+        width: 200px;
+    }
+    button {
+        margin: 5px;
+        padding: 5px;
+        width: 200px;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+    }
+    button:hover {
+        background-color: #003366;
+    }
+</style>
+
+</html>

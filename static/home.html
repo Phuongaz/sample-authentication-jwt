@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the Home Page</h1>
+    <p>You are now logged in!</p>
+    <button onclick="logout()">Logout</button>
+</body>
+
+<script>
+    const logout = () => {
+        window.location.href = '/logout';
+    }
+</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    h1 {
+        text-align: center;
+    }
+</style>
+</html>
